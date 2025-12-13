@@ -5,15 +5,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, ShoppingCart, Package, Users, BarChart3, Settings, LogOut, Menu } from "lucide-react";
 
-const SideNav = ({ collapsed }) => {
+const SideNav = ({ collapsed, theme }) => {
   const pathname = usePathname();
 
   return (
     <div
       className={`h-full text-sidebar-text flex flex-col p-4 font-sans
-                 border-r border-sidebar-border transition-all duration-300 ${collapsed ? "w-16" : "w-64"}`}
+                  border-r border-sidebar-border transition-all duration-300 ${collapsed ? "w-16" : "w-64"}`}
       style={{
-        background: "linear-gradient(180deg, #0b1023 0%, #0e1430 100%)",
+        background:
+          theme === "dark"
+            ? "linear-gradient(180deg, #0b1023 0%, #0e1430 100%)"
+            : "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)",
       }}
     >
       {/* Header / Logo */}
@@ -22,7 +25,9 @@ const SideNav = ({ collapsed }) => {
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
             <span className="text-white font-bold text-xl">X</span>
           </div>
-          {!collapsed && <span className="text-white text-xl font-bold tracking-tight">Dashnext</span>}
+          {!collapsed && (
+            <span className="text-sidebar-text dark:text-white text-xl font-bold tracking-tight">Dashnext</span>
+          )}
         </div>
       </div>
 
@@ -102,7 +107,7 @@ const NavItem = ({ icon, label, badge, sublabel, active, danger, href, collapsed
         transition-all duration-200 group
         ${
           active
-            ? "bg-sidebar-item text-sidebar-activeItem shadow-inner"
+            ? "bg-sidebar-item text-sidebar-activeItem "
             : danger
             ? "text-sidebar-text hover:bg-error/10 hover:text-error"
             : "text-sidebar-text hover:bg-sidebar-hover hover:text-sidebar-text-hover"

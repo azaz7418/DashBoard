@@ -1,21 +1,27 @@
 "use client";
 
 import React from "react";
-import { Menu, Search, Moon, Bell, LayoutGrid } from "lucide-react";
+import { Menu, Search, Moon, Sun, Bell, LayoutGrid } from "lucide-react";
 import Image from "next/image";
 
-const Header = ({ onToggle }) => {
+const Header = ({ onToggle, onThemeToggle, theme }) => {
   return (
     <header
       className="h-16 w-full flex items-center justify-between px-6
-                 border-b border-sidebar-border"
+                  border-b border-sidebar-border"
       style={{
-        background: "linear-gradient(180deg, #0b1023 0%, #0e1430 100%)",
+        background:
+          theme === "dark"
+            ? "linear-gradient(180deg, #0b1023 0%, #0e1430 100%)"
+            : "linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%)",
       }}
     >
       {/* Left Section */}
       <div className="flex items-center gap-4">
-        <button onClick={onToggle} className="text-sidebar-text hover:text-white transition-colors">
+        <button
+          onClick={onToggle}
+          className="text-sidebar-text hover:text-sidebar-text-hover dark:text-sidebar-text dark:hover:text-sidebar-text-hover transition-colors"
+        >
           <Menu size={20} />
         </button>
 
@@ -27,8 +33,8 @@ const Header = ({ onToggle }) => {
             placeholder="Search"
             className="
               w-64 pl-10 pr-4 py-2 rounded-lg
-              bg-[#0f1733]
-              text-sm text-white placeholder:text-sidebar-text
+              bg-sidebar-item dark:bg-[#0f1733]
+              text-sm text-sidebar-text-hover dark:text-white placeholder:text-sidebar-text
               border border-sidebar-border
               focus:outline-none focus:ring-2 focus:ring-primary/40
             "
@@ -39,8 +45,11 @@ const Header = ({ onToggle }) => {
       {/* Right Section */}
       <div className="flex items-center gap-4">
         {/* Theme */}
-        <button className="text-sidebar-text hover:text-white transition-colors">
-          <Moon size={18} />
+        <button
+          onClick={onThemeToggle}
+          className="text-sidebar-text hover:text-sidebar-text-hover dark:text-sidebar-text dark:hover:text-sidebar-text-hover transition-colors"
+        >
+          {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
         </button>
 
         {/* Language */}
@@ -55,20 +64,20 @@ const Header = ({ onToggle }) => {
         </div>
 
         {/* Notifications */}
-        <button className="relative text-sidebar-text hover:text-white transition-colors">
+        <button className="relative text-sidebar-text hover:text-sidebar-text-hover dark:text-sidebar-text dark:hover:text-sidebar-text-hover transition-colors">
           <Bell size={18} />
           <span className="absolute -top-1 -right-1 h-2 w-2 bg-primary rounded-full" />
         </button>
 
         {/* Apps */}
-        <button className="text-sidebar-text hover:text-white transition-colors">
+        <button className="text-sidebar-text hover:text-sidebar-text-hover dark:text-sidebar-text dark:hover:text-sidebar-text-hover transition-colors">
           <LayoutGrid size={18} />
         </button>
 
         {/* Profile */}
         <div className="flex items-center gap-3 pl-3 border-l border-sidebar-border">
           <div className="text-right hidden sm:block">
-            <p className="text-sm font-medium text-white leading-none">Azaz Ahamed</p>
+            <p className="text-sm font-medium text-sidebar-text-hover dark:text-white leading-none">Azaz Ahamed</p>
             <span className="text-[11px] text-sidebar-text">Business</span>
           </div>
           <Image

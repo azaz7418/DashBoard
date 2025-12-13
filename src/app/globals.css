@@ -1,3 +1,4 @@
+/* globals.css */
 @import "tailwindcss";
 
 /* ==============================
@@ -53,25 +54,73 @@
 
   /* -------- Sidebar Colors (Custom) -------- */
   --sidebar-bg: #0b1023;
-  --sidebar-text: #9ca3af;
+  --sidebar-text: #1c202f;
   --sidebar-text-hover: #e5e7eb;
   --sidebar-text-active: #3b82f6;
   --sidebar-border: #1e293b;
-  --sidebar-active-item-bg: #111a3a;
-  --sidebar-hover-bg: rgba(59, 130, 246, 0.08);
+  --sidebar-active-item-bg: #0e98d817;
+  --sidebar-hover-bg: #0e98d817;
 }
 
 /* ==============================
-   DARK MODE
-   ============================== */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    DARK MODE
+    ============================== */
+.dark {
+  /* -------- Primary Colors -------- */
+  --primary-500: #60a5fa;
+  --primary-400: #93c5fd;
+  --primary-300: #bfdbfe;
+  --primary-200: #dbeafe;
+  --primary-100: #eff6ff;
 
-    --muted: #1f2933;
-    --border: #374151;
-  }
+  /* -------- Secondary Colors -------- */
+  --secondary-500: #818cf8;
+  --secondary-400: #a5b4fc;
+  --secondary-300: #c7d2fe;
+  --secondary-200: #e0e7ff;
+  --secondary-100: #f0f2ff;
+
+  /* -------- Action Colors -------- */
+  --success-500: #34d399;
+  --success-100: #ecfdf5;
+
+  --warning-500: #fbbf24;
+  --warning-100: #fffbeb;
+
+  --error-500: #f87171;
+  --error-100: #fef2f2;
+
+  --info-500: #f472b6;
+  --info-100: #fdf2f8;
+
+  /* -------- Black Colors -------- */
+  --black-900: #f1f5f9;
+  --black-800: #e2e8f0;
+  --black-700: #cbd5e1;
+  --black-600: #94a3b8;
+  --black-500: #64748b;
+
+  /* -------- White / Gray Colors -------- */
+  --white-100: #0f172a;
+  --white-90: #1e293b;
+  --white-80: #334155;
+  --white-70: #475569;
+  --white-60: #64748b;
+
+  /* -------- System Colors -------- */
+  --background: var(--white-100);
+  --foreground: var(--black-900);
+  --border: var(--white-70);
+  --muted: var(--white-80);
+
+  /* -------- Sidebar Colors (Dark) -------- */
+  --sidebar-bg: #1e293b;
+  --sidebar-text: #cbd5e1;
+  --sidebar-text-hover: #f1f5f9;
+  --sidebar-text-active: #0e89d8;
+  --sidebar-border: #334155;
+  --sidebar-active-item-bg: #111a3a;
+  --sidebar-hover-bg: rgba(59, 130, 246, 0.08);
 }
 
 /* ==============================
@@ -104,15 +153,23 @@
   --color-sidebar-item: var(--sidebar-active-item-bg);
   --color-sidebar-hover: var(--sidebar-hover-bg);
 
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono); */
 }
 
 /* ==============================
-   GLOBAL STYLES
-   ============================== */
+    GLOBAL STYLES
+    ============================== */
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  scrollbar-width: none; /* Firefox */
 }
+
+/* Hide scrollbars */
+::-webkit-scrollbar {
+  display: none;
+}
+
+

@@ -1,7 +1,7 @@
 "use client";
 
 import { Geist, Geist_Mono } from "next/font/google";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./globals.css";
 import SideNav from "@/components/ui/SideNav";
 import Header from "@/components/ui/Header";
@@ -19,14 +19,31 @@ const geistMono = Geist_Mono({
 
 export default function RootLayout({ children }) {
   const [collapsed, setCollapsed] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("theme") || "light";
+    }
+    return "light";
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove("light", "dark");
+    root.classList.add(theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="flex h-screen">
-          <SideNav collapsed={collapsed} />
+          <SideNav collapsed={collapsed} theme={theme} />
           <div className="flex-1 flex flex-col">
-            <Header onToggle={() => setCollapsed(!collapsed)} />
+            <Header onToggle={() => setCollapsed(!collapsed)} onThemeToggle={toggleTheme} theme={theme} />
             <div className="flex-1 overflow-auto">{children}</div>
             <Footer />
           </div>
