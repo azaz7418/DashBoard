@@ -1,26 +1,118 @@
 @import "tailwindcss";
 
+/* ==============================
+   ROOT COLOR TOKENS (LIGHT MODE)
+   ============================== */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* -------- Primary Colors -------- */
+  --primary-500: #3b82f6;
+  --primary-400: #60a5fa;
+  --primary-300: #93c5fd;
+  --primary-200: #bfdbfe;
+  --primary-100: #dbeafe;
+
+  /* -------- Secondary Colors -------- */
+  --secondary-500: #6366f1;
+  --secondary-400: #818cf8;
+  --secondary-300: #a5b4fc;
+  --secondary-200: #c7d2fe;
+  --secondary-100: #e0e7ff;
+
+  /* -------- Action Colors -------- */
+  --success-500: #22c55e;
+  --success-100: #dcfce7;
+
+  --warning-500: #f59e0b;
+  --warning-100: #fef3c7;
+
+  --error-500: #ef4444;
+  --error-100: #fee2e2;
+
+  --info-500: #ec4899;
+  --info-100: #fce7f3;
+
+  /* -------- Black Colors -------- */
+  --black-900: #0f172a;
+  --black-800: #1e293b;
+  --black-700: #334155;
+  --black-600: #475569;
+  --black-500: #64748b;
+
+  /* -------- White / Gray Colors -------- */
+  --white-100: #ffffff;
+  --white-90: #f9fafb;
+  --white-80: #f3f4f6;
+  --white-70: #e5e7eb;
+  --white-60: #d1d5db;
+
+  /* -------- System Colors -------- */
+  --background: var(--white-100);
+  --foreground: var(--black-900);
+  --border: var(--white-70);
+  --muted: var(--white-80);
+
+  /* -------- Sidebar Colors (Custom) -------- */
+  --sidebar-bg: #0b1023;
+  --sidebar-text: #9ca3af;
+  --sidebar-text-hover: #e5e7eb;
+  --sidebar-text-active: #3b82f6;
+  --sidebar-border: #1e293b;
+  --sidebar-active-item-bg: #111a3a;
+  --sidebar-hover-bg: rgba(59, 130, 246, 0.08);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
+/* ==============================
+   DARK MODE
+   ============================== */
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+
+    --muted: #1f2933;
+    --border: #374151;
   }
 }
 
+/* ==============================
+   TAILWIND THEME BINDING
+   ============================== */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary-500);
+  --color-primary-light: var(--primary-300);
+
+  --color-secondary: var(--secondary-500);
+  --color-secondary-light: var(--secondary-300);
+
+  --color-success: var(--success-500);
+  --color-warning: var(--warning-500);
+  --color-error: var(--error-500);
+  --color-info: var(--info-500);
+
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+
+  /* Sidebar Colors */
+  --color-sidebar: var(--sidebar-bg);
+  --color-sidebar-bg: var(--sidebar-bg);
+  --color-sidebar-text: var(--sidebar-text);
+  --color-sidebar-activeItem: var(--sidebar-text-active);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-item: var(--sidebar-active-item-bg);
+  --color-sidebar-hover: var(--sidebar-hover-bg);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ==============================
+   GLOBAL STYLES
+   ============================== */
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
