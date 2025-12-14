@@ -4,13 +4,14 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, ShoppingCart, Package, Users, BarChart3, Settings, LogOut, Menu } from "lucide-react";
+import Image from "next/image";
 
 const SideNav = ({ collapsed, theme }) => {
   const pathname = usePathname();
 
   return (
     <div
-      className={`h-full text-sidebar-text flex flex-col p-4 font-sans
+      className={`h-full text-sidebar-text flex flex-col p-2 font-sans
                   border-r border-sidebar-border transition-all duration-300 ${collapsed ? "w-16" : "w-64"}`}
       style={{
         background:
@@ -20,15 +21,22 @@ const SideNav = ({ collapsed, theme }) => {
       }}
     >
       {/* Header / Logo */}
-      <div className="flex items-center justify-between mb-8 px-2">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
-            <span className="text-white font-bold text-xl">X</span>
+      <div className="flex items-center mb-8 px-2">
+        {/* <div className="flex items-center gap-2">
+          <div className="w-8 h-8 bg-sidebar-item rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
+            <span className="text-sidebar-text  font-bold text-xl">X</span>
           </div>
           {!collapsed && (
-            <span className="text-sidebar-text dark:text-white text-xl font-bold tracking-tight">Dashnext</span>
+            <span className="text-sidebar-text text-xl font-bold tracking-tight">Dashnext</span>
           )}
-        </div>
+        </div> */}
+        <Image
+          src={collapsed ? "/image/Logo.png" : theme === "dark" ? "/image/Logo - Dark.png" : "/image/Logo -Light.png"}
+          alt="Dashnext Logo"
+          width={collapsed ? 40 : 120}
+          height={collapsed ? 40 : 40}
+          className="object-contain"
+        />
       </div>
 
       <div className="flex-1 overflow-y-auto custom-scrollbar">
