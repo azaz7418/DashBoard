@@ -3,7 +3,20 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, ShoppingCart, Package, Users, BarChart3, Settings, LogOut, Menu } from "lucide-react";
+import {
+  Home,
+  ShoppingCart,
+  Package,
+  Users,
+  BarChart3,
+  Settings,
+  LogOut,
+  Menu,
+  Archive,
+  CreditCard,
+  Truck,
+  FileText,
+} from "lucide-react";
 import Image from "next/image";
 
 const SideNav = ({ collapsed, theme }) => {
@@ -72,10 +85,45 @@ const SideNav = ({ collapsed, theme }) => {
               collapsed={collapsed}
             />
             <NavItem
+              icon={<Archive size={18} />}
+              label="Inventory"
+              href="/inventory"
+              active={pathname === "/inventory"}
+              collapsed={collapsed}
+            />
+            <NavItem
               icon={<BarChart3 size={18} />}
               label="Analytics"
               href="/analytics"
               active={pathname === "/analytics"}
+              collapsed={collapsed}
+            />
+            <NavItem
+              icon={<CreditCard size={18} />}
+              label="Payments"
+              href="/payments"
+              active={pathname === "/payments"}
+              collapsed={collapsed}
+            />
+            <NavItem
+              icon={<Truck size={18} />}
+              label="Shipping"
+              href="/shipping"
+              active={pathname === "/shipping"}
+              collapsed={collapsed}
+            />
+            <NavItem
+              icon={<FileText size={18} />}
+              label="Reports"
+              href="/reports"
+              active={pathname === "/reports"}
+              collapsed={collapsed}
+            />
+            <NavItem
+              icon={<Settings size={18} />}
+              label="Settings"
+              href="/settings"
+              active={pathname === "/settings"}
               collapsed={collapsed}
             />
           </nav>
@@ -89,13 +137,6 @@ const SideNav = ({ collapsed, theme }) => {
             </p>
           )}
           <nav className="space-y-1">
-            <NavItem
-              icon={<Settings size={18} />}
-              label="Settings"
-              href="/settings"
-              active={pathname === "/settings"}
-              collapsed={collapsed}
-            />
             <NavItem icon={<LogOut size={18} />} label="Logout" href="/logout" danger collapsed={collapsed} />
           </nav>
         </section>
