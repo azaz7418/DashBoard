@@ -67,7 +67,7 @@ export default function OrdersPage() {
 
         {/* Bulk Actions */}
         {selectedOrders.length > 0 && (
-          <div className="mb-4 p-3 bg-primary-light rounded-md flex items-center justify-between">
+          <div className="mb-4 p-3 bg-secondary rounded-md flex items-center justify-between">
             <span className="text-sm font-medium">{selectedOrders.length} orders selected</span>
             <div className="flex gap-2">
               <button className="px-3 py-1 bg-success text-white rounded-md text-sm hover:bg-success/80">
