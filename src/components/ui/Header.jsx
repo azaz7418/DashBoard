@@ -20,7 +20,7 @@ const Header = ({ onToggle, onThemeToggle, theme }) => {
       <div className="flex items-center gap-4">
         <button
           onClick={onToggle}
-          className="text-sidebar-text hover:text-sidebar-text-hover dark:text-sidebar-text dark:hover:text-sidebar-text-hover transition-colors"
+          className="text-sidebar-text hover:text-sidebar-text-hover dark:text-sidebar-text dark:hover:text-sidebar-text-hover transition-colors cursor-pointer"
         >
           <Menu size={20} />
         </button>

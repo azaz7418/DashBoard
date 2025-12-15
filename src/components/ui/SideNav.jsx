@@ -48,7 +48,7 @@ const SideNav = ({ collapsed, theme }) => {
           alt="Dashnext Logo"
           width={collapsed ? 40 : 120}
           height={collapsed ? 40 : 40}
-          className="object-contain"
+          className="object-contain transform duration-300"
         />
       </div>
 
@@ -146,8 +146,8 @@ const SideNav = ({ collapsed, theme }) => {
 };
 
 /* --------------------------------
-   Nav Item Component
---------------------------------- */
+    Nav Item Component
+ --------------------------------- */
 const NavItem = ({ icon, label, badge, sublabel, active, danger, href, collapsed }) => {
   const content = (
     <div
@@ -163,11 +163,13 @@ const NavItem = ({ icon, label, badge, sublabel, active, danger, href, collapsed
         }
       `}
     >
-      <div className="transition-colors group-hover:text-sidebar-text-hover">{icon}</div>
+      <div className="transition-colors duration-300 group-hover:text-sidebar-text-hover group-hover:scale-110">
+        {icon}
+      </div>
 
       {!collapsed && (
         <div className="flex flex-col">
-          <span className="text-sm font-medium transition-colors">{label}</span>
+          <span className="text-sm font-medium transition-colors duration-300">{label}</span>
           {sublabel && <span className="text-[10px] opacity-70 leading-none">{sublabel}</span>}
         </div>
       )}
