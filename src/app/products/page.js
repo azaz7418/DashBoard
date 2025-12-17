@@ -1,18 +1,19 @@
-'use client';
+"use client";
 import { productsData } from "@/components/data/DummyData";
 import { EditIcon } from "lucide-react";
 import React, { useMemo, useState } from "react";
 
 export default function ProductsPage() {
-const [categoryFilter, setCategoryFilter] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [stockStatusFilter, setStockStatusFilter] = useState("");
 
-const filteredProducts = useMemo(() => {
-
+  const filteredProducts = useMemo(() => {
     return productsData.filter((product) => {
-
+      if (categoryFilter && product.category !== categoryFilter) return false;
+      if (stockStatusFilter && product.status !== stockStatusFilter) return false;
       return true;
     });
-  }, []);
+  }, [categoryFilter, stockStatusFilter]);
 
   return (
     <div className="p-8">
@@ -20,18 +21,32 @@ const filteredProducts = useMemo(() => {
       <div>
         <p className="text-muted-foreground mb-6">Manage and view your products here.</p>
         <div className="flex justify-between mb-4">
-          <div>
+          <div className="flex gap-4">
             <div>
               <label className="text-sm font-medium text-foreground mr-2">Category:</label>
-              <select 
-              value={categoryFilter}
-              onChange={(e) => setCategoryFilter(e.target.value)}
-              className="px-3 py-2 border border-border rounded-md bg-background text-foreground">
+              <select
+                value={categoryFilter}
+                onChange={(e) => setCategoryFilter(e.target.value)}
+                className="px-3 py-2 border border-border rounded-md bg-background text-foreground"
+              >
                 <option value="">All Categories</option>
                 <option value="Electronics">Electronics</option>
                 <option value="Fashion">Fashion</option>
                 <option value="Home & Living">Home & Living</option>
                 <option value="Groceries">Groceries</option>
+              </select>
+            </div>
+            <div>
+              <label className="text-sm font-medium text-foreground mr-2">Stock Status:</label>
+              <select
+                value={stockStatusFilter}
+                onChange={(e) => setStockStatusFilter(e.target.value)}
+                className="px-3 py-2 border border-border rounded-md bg-background text-foreground"
+              >
+                <option value="">All Stock Statuses</option>
+                <option value="Active">Active</option>
+                <option value="Low Stock">Low Stock</option>
+                <option value="Out of Stock">Out of Stock</option>
               </select>
             </div>
           </div>
@@ -53,7 +68,7 @@ const filteredProducts = useMemo(() => {
             </tr>
           </thead>
           <tbody>
-            {productsData.map((product) => (
+            {filteredProducts.map((product) => (
               <tr key={product.id} className="hover:bg-muted/10">
                 <td className="p-2 border-b border-border">
                   {/* <Image src={product.image} alt={product.name} className="w-16 h-16 object-cover rounded-md" /> */}
