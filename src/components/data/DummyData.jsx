@@ -76,6 +76,7 @@ export const ordersData = [
     paymentStatus: "Paid",
     orderStatus: "Delivered",
     createdAt: "2025-12-03",
+    products: ["Wireless Headphone", "Smart Watch"],
   },
   {
     id: "ORD-1002",
@@ -86,6 +87,7 @@ export const ordersData = [
     paymentStatus: "Paid",
     orderStatus: "Pending",
     createdAt: "2025-12-06",
+    products: ["Men's Jacket"],
   },
   {
     id: "ORD-1003",
@@ -96,6 +98,18 @@ export const ordersData = [
     paymentStatus: "Unpaid",
     orderStatus: "Cancelled",
     createdAt: "2025-12-07",
+    products: ["Kitchen Blender"],
+  },
+  {
+    id: "ORD-1004",
+    customerId: "CUS-003",
+    customerName: "Tanvir Ahmed",
+    totalAmount: 99.99,
+    paymentMethod: "bKash",
+    paymentStatus: "Paid",
+    orderStatus: "Pending",
+    createdAt: "2025-10-07",
+    products: ["Smart Watch"],
   },
 ];
 
@@ -172,6 +186,17 @@ export const customersData = [
     name: "Tanvir Ahmed",
     email: "tanvir@gmail.com",
     city: "Sylhet",
+    totalOrders: 3,
+    totalSpent: 540.0,
+    status: "Inactive",
+    joinedAt: "2025-07-02",
+    lastLogin: "2025-11-20",
+  },
+  {
+    id: "CUS-004",
+    name: "Azaz Ahmed",
+    email: "azaz@gmail.com",
+    city: "Khulna",
     totalOrders: 3,
     totalSpent: 540.0,
     status: "Inactive",

@@ -153,7 +153,7 @@ export default function CustomersPage() {
                   {getCustomerOrders(selectedCustomer.id).map((order) => (
                     <tr key={order.id}>
                       <td className="border border-border px-2 py-1">{order.id}</td>
-                      <td className="border border-border px-2 py-1">Wireless Headphone</td>
+                      <td className="border border-border px-2 py-1">{order.products.join(", ")}</td>
                       <td className="border border-border px-2 py-1">${order.totalAmount.toFixed(2)}</td>
                       <td className="border border-border px-2 py-1">{order.orderStatus}</td>
                       <td className="border border-border px-2 py-1">{order.paymentMethod}</td>
