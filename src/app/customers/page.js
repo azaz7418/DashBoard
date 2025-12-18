@@ -103,7 +103,7 @@ export default function CustomersPage() {
       {/* Customer Profile Modal */}
       {selectedCustomer && (
         <div className="fixed inset-0 bg-black/60 bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-2xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg max-w-4xl w-full mx-4 max-h-[80vh] overflow-y-auto">
             <h2 className="text-2xl font-bold mb-4">{selectedCustomer.name} Profile</h2>
             <div className="grid grid-cols-2 gap-4 mb-6">
               <div>
@@ -142,8 +142,10 @@ export default function CustomersPage() {
                 <thead>
                   <tr className="bg-muted/50">
                     <th className="border border-border px-2 py-1 text-left">Order ID</th>
+                    <th className="border border-border px-2 py-1 text-left">Product</th>
                     <th className="border border-border px-2 py-1 text-left">Amount</th>
                     <th className="border border-border px-2 py-1 text-left">Status</th>
+                    <th className="border border-border px-2 py-1 text-left">Payment Method</th>
                     <th className="border border-border px-2 py-1 text-left">Date</th>
                   </tr>
                 </thead>
@@ -151,8 +153,10 @@ export default function CustomersPage() {
                   {getCustomerOrders(selectedCustomer.id).map((order) => (
                     <tr key={order.id}>
                       <td className="border border-border px-2 py-1">{order.id}</td>
+                      <td className="border border-border px-2 py-1">Wireless Headphone</td>
                       <td className="border border-border px-2 py-1">${order.totalAmount.toFixed(2)}</td>
                       <td className="border border-border px-2 py-1">{order.orderStatus}</td>
+                      <td className="border border-border px-2 py-1">{order.paymentMethod}</td>
                       <td className="border border-border px-2 py-1">{order.createdAt}</td>
                     </tr>
                   ))}

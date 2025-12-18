@@ -35,14 +35,6 @@ const SideNav = ({ collapsed, theme }) => {
     >
       {/* Header / Logo */}
       <div className="flex items-center mb-8 px-2">
-        {/* <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-sidebar-item rounded-lg flex items-center justify-center shadow-lg shadow-primary/20">
-            <span className="text-sidebar-text  font-bold text-xl">X</span>
-          </div>
-          {!collapsed && (
-            <span className="text-sidebar-text text-xl font-bold tracking-tight">Dashnext</span>
-          )}
-        </div> */}
         <Image
           src={collapsed ? "/image/Logo.png" : theme === "dark" ? "/image/Logo - Dark.png" : "/image/Logo -Light.png"}
           alt="Dashnext Logo"
