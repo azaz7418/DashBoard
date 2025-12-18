@@ -152,7 +152,7 @@ export default function OrdersPage() {
                         <button className="px-2 py-1 bg-primary text-white rounded text-xs hover:bg-primary/80">
                           View
                         </button>
-                        <select className="px-2 py-1 border border-border rounded text-xs">
+                        <select className="px-2 py-1 border border-border bg-background rounded text-xs">
                           <option>Update Status</option>
                           <option value="Pending">Pending</option>
                           <option value="Delivered">Delivered</option>

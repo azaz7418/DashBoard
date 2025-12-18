@@ -1,4 +1,3 @@
-
 /* ======================
    DASHBOARD OVERVIEW
    ====================== */
@@ -155,6 +154,7 @@ export const customersData = [
     totalSpent: 2140.5,
     status: "Active",
     joinedAt: "2025-03-11",
+    lastLogin: "2025-12-15",
   },
   {
     id: "CUS-002",
@@ -165,6 +165,7 @@ export const customersData = [
     totalSpent: 1240.75,
     status: "Active",
     joinedAt: "2025-05-19",
+    lastLogin: "2025-12-13",
   },
   {
     id: "CUS-003",
@@ -175,6 +176,7 @@ export const customersData = [
     totalSpent: 540.0,
     status: "Inactive",
     joinedAt: "2025-07-02",
+    lastLogin: "2025-11-20",
   },
 ];
 
