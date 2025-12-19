@@ -4,6 +4,7 @@ import React, { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { productsData } from "@/components/data/DummyData";
 import { Eye, Pencil, Trash2 } from "lucide-react";
+import Link from "next/link";
 
 export default function ProductsPage() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function ProductsPage() {
           <h2 className="text-lg font-semibold text-foreground">All Product List</h2>
 
           <div className="flex items-center gap-3">
-            <button  onClick={()=> router.push(`/products/create`)} className="px-4 py-2 bg-primary text-white rounded-md text-sm">Add Product</button>
+            <Link href="/products/create" className="px-4 py-2 bg-primary text-white rounded-md text-sm">Add Product</Link>
             <select className="px-3 py-2 border border-border rounded-md bg-background text-sm">
               <option>This Month</option>
               <option>Last Month</option>
