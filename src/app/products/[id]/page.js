@@ -4,14 +4,14 @@ import React, { useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { productsData } from "@/components/data/DummyData";
-import { ArrowLeft, Star, Minus, Plus, Truck, Ticket, Gift, Headphones } from "lucide-react";
+import { ArrowLeft, Star, Minus, Plus, Scooter, Ticket, Gift, Headphones } from "lucide-react";
 
 const features = [
   {
     id: 1,
     title: "Free shipping for all orders over $200",
     description: "Only in this week",
-    icon: "Truck", // or 'TruckIcon' depending on your library
+    icon: "Scooter", // or 'TruckIcon' depending on your library
   },
   {
     id: 2,
@@ -32,9 +32,9 @@ const features = [
     icon: "Headphones",
   },
 ];
-
+<Scooter />
 const iconMap = {
-  Truck: Truck,
+  Scooter: Scooter,
   Ticket: Ticket,
   Gift: Gift,
   Headphones: Headphones,
