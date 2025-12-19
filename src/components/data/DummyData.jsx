@@ -127,7 +127,15 @@ export const productsData = [
     createdAt: "2025-01-15",
     rating: 4.5,
     reviews: 55,
+    offer: 20,
     sold: 120,
+    // image: "https://via.placeholder.com/400x400?text=Wireless+Headphone",
+    images: [
+      "/image/productImage/p-1.png",
+      "/image/productImage/p-10.png",
+      "/image/productImage/p-13.png",
+      "/image/productImage/p-14.png",
+    ],
   },
   {
     id: "PRD-002",
@@ -139,7 +147,15 @@ export const productsData = [
     createdAt: "2025-02-10",
     rating: 4.7,
     reviews: 42,
+    offer: 20,
     sold: 85,
+    // image: "httpsImage//via.placeholder.com/400x400?text=Smart+Watch",
+    images: [
+      "/image/productImage/p-1.png",
+      "/image/productImage/p-10.png",
+      "/image/productImage/p-13.png",
+      "/image/productImage/p-14.png",
+    ],
   },
   {
     id: "PRD-003",
@@ -151,7 +167,14 @@ export const productsData = [
     createdAt: "2025-03-22",
     rating: 4.2,
     reviews: 28,
+    offer: 20,
     sold: 65,
+    images: [
+      "/image/productImage/p-1.png",
+      "/image/productImage/p-10.png",
+      "/image/productImage/p-13.png",
+      "/image/productImage/p-14.png",
+    ],
   },
   {
     id: "PRD-004",
@@ -163,7 +186,14 @@ export const productsData = [
     createdAt: "2025-04-18",
     rating: 4.0,
     reviews: 15,
+    offer: 20,
     sold: 30,
+    images: [
+      "/image/productImage/p-1.png",
+      "/image/productImage/p-10.png",
+      "/image/productImage/p-13.png",
+      "/image/productImage/p-14.png",
+    ],
   },
 ];
 
