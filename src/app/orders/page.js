@@ -4,176 +4,138 @@ import React, { useState, useMemo } from "react";
 import { ordersData } from "../../components/data/DummyData";
 
 export default function OrdersPage() {
-  const [dateFrom, setDateFrom] = useState("");
-  const [dateTo, setDateTo] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
-  const [selectedOrders, setSelectedOrders] = useState([]);
+  const [activeTab, setActiveTab] = useState("All");
+  const [search, setSearch] = useState("");
 
+  /* -------------------------------
+     SUMMARY CALCULATIONS
+  -------------------------------- */
+  const summary = useMemo(() => {
+    const total = ordersData.length;
+    const processing = ordersData.filter(o => o.orderStatus === "Pending").length;
+    const done = ordersData.filter(o => o.orderStatus === "Delivered").length;
+    const income = ordersData.reduce((sum, o) => sum + o.totalAmount, 0);
+
+    return { total, processing, done, income };
+  }, []);
+
+  /* -------------------------------
+     FILTERED ORDERS
+  -------------------------------- */
   const filteredOrders = useMemo(() => {
-    return ordersData.filter((order) => {
-      const orderDate = new Date(order.createdAt);
-      const fromDate = dateFrom ? new Date(dateFrom) : null;
-      const toDate = dateTo ? new Date(dateTo) : null;
-
-      if (fromDate && orderDate < fromDate) return false;
-      if (toDate && orderDate > toDate) return false;
-      if (statusFilter && order.orderStatus !== statusFilter) return false;
-
+    return ordersData.filter(order => {
+      if (activeTab !== "All" && order.orderStatus !== activeTab) return false;
+      if (search && !order.id.toString().includes(search)) return false;
       return true;
     });
-  }, [dateFrom, dateTo, statusFilter]);
+  }, [activeTab, search]);
 
   return (
-    <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6 text-foreground">Orders</h1>
+    <div className="p-8 space-y-6">
 
-      <div className="bg-white/50 dark:bg-black/20 p-6 rounded-xl border border-border shadow-sm">
-        <p className="text-muted-foreground mb-6">Manage and view your orders here.</p>
+      {/* ==============================
+         TOP SUMMARY CARDS
+      ============================== */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <SummaryCard title="Total Order" value={summary.total} />
+        <SummaryCard title="Order on Process" value={summary.processing} />
+        <SummaryCard title="Order Done" value={summary.done} />
+        <SummaryCard title="Total Income" value={`$${summary.income.toFixed(2)}`} />
+      </div>
 
-        {/* Filters */}
-        <div className="flex flex-wrap gap-4 mb-6">
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-foreground mb-1">Date From</label>
-            <input
-              type="date"
-              value={dateFrom}
-              onChange={(e) => setDateFrom(e.target.value)}
-              className="px-3 py-2 border border-border rounded-md bg-background text-foreground"
-            />
+      {/* ==============================
+         ORDER LIST CONTAINER
+      ============================== */}
+      <div className="bg-white/50 dark:bg-black/20 border border-border rounded-xl p-6 space-y-5">
+
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div>
+            <h2 className="text-lg font-semibold text-foreground">Order List</h2>
+            <p className="text-sm text-muted-foreground">
+              View and manage all transactions with details on status, payment, and customer.
+            </p>
           </div>
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-foreground mb-1">Date To</label>
-            <input
-              type="date"
-              value={dateTo}
-              onChange={(e) => setDateTo(e.target.value)}
-              className="px-3 py-2 border border-border rounded-md bg-background text-foreground"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label className="text-sm font-medium text-foreground mb-1">Status</label>
-            <select
-              value={statusFilter}
-              onChange={(e) => setStatusFilter(e.target.value)}
-              className="px-3 py-2 border border-border rounded-md bg-background text-foreground"
-            >
-              <option value="">All Statuses</option>
-              <option value="Pending">Pending</option>
-              <option value="Delivered">Delivered</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
-          </div>
+
+          <input
+            type="text"
+            placeholder="Search Invoice"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="px-4 py-2 border border-border rounded-md bg-background text-sm w-full lg:w-64"
+          />
         </div>
 
-        {/* Bulk Actions */}
-        {selectedOrders.length > 0 && (
-          <div className="mb-4 p-3 bg-secondary rounded-md flex items-center justify-between">
-            <span className="text-sm font-medium">{selectedOrders.length} orders selected</span>
-            <div className="flex gap-2">
-              <button className="px-3 py-1 bg-success text-white rounded-md text-sm hover:bg-success/80">
-                Mark as Shipped
-              </button>
-              <button className="px-3 py-1 bg-info text-white rounded-md text-sm hover:bg-info/80">Export CSV</button>
-            </div>
-          </div>
-        )}
+        {/* ==============================
+           STATUS TABS
+        ============================== */}
+        <div className="flex flex-wrap gap-2">
+          {["All", "Pending", "On the way", "Delivered"].map(tab => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab === "All" ? "All" : tab)}
+              className={`px-4 py-2 rounded-md text-sm border ${
+                activeTab === tab ? "border-primary" : "border-border"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
 
-        {filteredOrders.length > 0 ? (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-muted/20 dark:bg-muted/30">
-                  <th className="py-2 px-4 border-b border-border">
-                    <input
-                      type="checkbox"
-                      onChange={(e) => {
-                        if (e.target.checked) {
-                          setSelectedOrders(filteredOrders.map((o) => o.id));
-                        } else {
-                          setSelectedOrders([]);
-                        }
-                      }}
-                      checked={selectedOrders.length === filteredOrders.length && filteredOrders.length > 0}
-                    />
-                  </th>
-                  <th className="py-2 px-4 border-b border-border">Order ID</th>
-                  <th className="py-2 px-4 border-b border-border">Customer Name</th>
-                  <th className="py-2 px-4 border-b border-border">Order Date</th>
-                  <th className="py-2 px-4 border-b border-border">Total Amount</th>
-                  <th className="py-2 px-4 border-b border-border">Payment Status</th>
-                  <th className="py-2 px-4 border-b border-border">Order Status</th>
-                  <th className="py-2 px-4 border-b border-border">Actions</th>
+        {/* ==============================
+           TABLE
+        ============================== */}
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="border-b border-border text-muted-foreground">
+                <th className="py-3 px-4 text-left">ID</th>
+                <th className="py-3 px-4 text-left">Date</th>
+                <th className="py-3 px-4 text-left">Customer</th>
+                <th className="py-3 px-4 text-left">Products</th>
+                <th className="py-3 px-4 text-center">Qty</th>
+                <th className="py-3 px-4 text-left">Total</th>
+                <th className="py-3 px-4 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredOrders.map(order => (
+                <tr key={order.id} className="border-b border-border hover:bg-muted/10">
+                  <td className="py-3 px-4">{order.id}</td>
+                  <td className="py-3 px-4">{order.createdAt}</td>
+                  <td className="py-3 px-4">{order.customerName}</td>
+                  <td className="py-3 px-4">{order.products?.join(", ")}</td>
+                  <td className="py-3 px-4 text-center">{order.quantity}</td>
+                  <td className="py-3 px-4">${order.totalAmount}</td>
+                  <td className="py-3 px-4 text-center">
+                    <button className="text-primary text-xs">View</button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {filteredOrders.map((order) => (
-                  <tr key={order.id} className="hover:bg-muted/10">
-                    <td className="py-3 px-4 border-b border-border">
-                      <input
-                        type="checkbox"
-                        checked={selectedOrders.includes(order.id)}
-                        onChange={(e) => {
-                          if (e.target.checked) {
-                            setSelectedOrders([...selectedOrders, order.id]);
-                          } else {
-                            setSelectedOrders(selectedOrders.filter((id) => id !== order.id));
-                          }
-                        }}
-                      />
-                    </td>
-                    <td className="py-3 px-4 border-b border-border">{order.id}</td>
-                    <td className="py-3 px-4 border-b border-border">{order.customerName}</td>
-                    <td className="py-3 px-4 border-b border-border">{order.createdAt}</td>
-                    <td className="py-3 px-4 border-b border-border">${order.totalAmount}</td>
-                    <td className="py-3 px-4 border-b border-border">
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs ${
-                          order.paymentStatus === "Paid" ? "bg-success-light text-success" : "bg-error-light text-error"
-                        }`}
-                      >
-                        {order.paymentStatus}
-                      </span>
-                    </td>
-                    <td className="py-3 px-4 border-b border-border">
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs ${
-                          order.orderStatus === "Delivered"
-                            ? "bg-success-light text-success"
-                            : order.orderStatus === "Pending"
-                            ? "bg-warning-light text-warning"
-                            : "bg-error-light text-error"
-                        }`}
-                      >
-                        {order.orderStatus}
-                      </span>
-                    </td>
-                    <td className="py-3 px-4 border-b border-border">
-                      <div className="flex gap-2">
-                        <button className="px-2 py-1 bg-primary text-white rounded text-xs hover:bg-primary/80">
-                          View
-                        </button>
-                        <select className="px-2 py-1 border border-border bg-background rounded text-xs">
-                          <option>Update Status</option>
-                          <option value="Pending">Pending</option>
-                          <option value="Delivered">Delivered</option>
-                          <option value="Cancelled">Cancelled</option>
-                        </select>
-                        <button className="px-2 py-1 bg-error text-white rounded text-xs hover:bg-error/80">
-                          Cancel
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="mt-8 h-64 bg-muted/50 rounded-lg border border-dashed border-border flex items-center justify-center">
-            <span className="text-muted-foreground">Orders data will appear here</span>
-          </div>
-        )}
+              ))}
+            </tbody>
+          </table>
+
+          {filteredOrders.length === 0 && (
+            <div className="py-16 text-center text-muted-foreground">
+              Orders data will appear here
+            </div>
+          )}
+        </div>
       </div>
+    </div>
+  );
+}
+
+/* ==============================
+   SUMMARY CARD COMPONENT
+============================== */
+function SummaryCard({ title, value }) {
+  return (
+    <div className="border border-border rounded-xl p-5 bg-background">
+      <p className="text-sm text-muted-foreground">{title}</p>
+      <h3 className="text-2xl font-semibold text-foreground mt-1">{value}</h3>
+      <p className="text-xs text-muted-foreground mt-2">Compare to yesterday</p>
     </div>
   );
 }

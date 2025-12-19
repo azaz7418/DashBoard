@@ -1,104 +1,139 @@
 "use client";
-import { productsData } from "@/components/data/DummyData";
-import { EditIcon } from "lucide-react";
+
 import React, { useMemo, useState } from "react";
+import { productsData } from "@/components/data/DummyData";
+import { Eye, Pencil, Trash2 } from "lucide-react";
 
 export default function ProductsPage() {
   const [categoryFilter, setCategoryFilter] = useState("");
-  const [stockStatusFilter, setStockStatusFilter] = useState("");
 
   const filteredProducts = useMemo(() => {
-    return productsData.filter((product) => {
-      if (categoryFilter && product.category !== categoryFilter) return false;
-      if (stockStatusFilter && product.status !== stockStatusFilter) return false;
+    return productsData.filter((p) => {
+      if (categoryFilter && p.category !== categoryFilter) return false;
       return true;
     });
-  }, [categoryFilter, stockStatusFilter]);
+  }, [categoryFilter]);
 
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold mb-6 text-foreground">Products</h1>
-      <div>
-        <p className="text-muted-foreground mb-6">Manage and view your products here.</p>
-        <div className="flex justify-between mb-4">
-          <div className="flex gap-4">
-            <div>
-              <label className="text-sm font-medium text-foreground mr-2">Category:</label>
-              <select
-                value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value)}
-                className="px-3 py-2 border border-border rounded-md bg-background text-foreground"
-              >
-                <option value="">All Categories</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Fashion">Fashion</option>
-                <option value="Home & Living">Home & Living</option>
-                <option value="Groceries">Groceries</option>
-              </select>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-foreground mr-2">Stock Status:</label>
-              <select
-                value={stockStatusFilter}
-                onChange={(e) => setStockStatusFilter(e.target.value)}
-                className="px-3 py-2 border border-border rounded-md bg-background text-foreground"
-              >
-                <option value="">All Stock Statuses</option>
-                <option value="Active">Active</option>
-                <option value="Low Stock">Low Stock</option>
-                <option value="Out of Stock">Out of Stock</option>
-              </select>
-            </div>
-          </div>
+      {/* ================= HEADER CARD ================= */}
+      <div className="bg-white/50 dark:bg-black/20 border border-border rounded-xl">
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 px-6 py-5 border-b border-border">
+          <h2 className="text-lg font-semibold text-foreground">
+            All Product List
+          </h2>
 
-          <button className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/80">Add New Product</button>
+          <div className="flex items-center gap-3">
+            <button className="px-4 py-2 bg-primary text-white rounded-md text-sm">
+              Add Product
+            </button>
+            <select className="px-3 py-2 border border-border rounded-md bg-background text-sm">
+              <option>This Month</option>
+              <option>Last Month</option>
+              <option>This Year</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div className="bg-white/50 dark:bg-black/20 p-6 rounded-xl border border-border shadow-sm">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr>
-              <th className="text-left p-2 border-b border-border">Product Image</th>
-              <th className="text-left p-2 border-b border-border">Name</th>
-              <th className="text-left p-2 border-b border-border">Category</th>
-              <th className="text-left p-2 border-b border-border">Price</th>
-              <th className="text-left p-2 border-b border-border">Stock</th>
-              <th className="text-left p-2 border-b border-border">Status</th>
-              <th className="text-left p-2 border-b border-border">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredProducts.map((product) => (
-              <tr key={product.id} className="hover:bg-muted/10">
-                <td className="p-2 border-b border-border">
-                  {/* <Image src={product.image} alt={product.name} className="w-16 h-16 object-cover rounded-md" /> */}
-                </td>
-                <td className="p-2 border-b border-border">{product.name}</td>
-                <td className="p-2 border-b border-border">{product.category}</td>
-                <td className="p-2 border-b border-border">${product.price.toFixed(2)}</td>
-                <td className="p-2 border-b border-border">{product.stock}</td>
-                <td className="p-2 border-b border-border">
-                  <span
-                    className={`px-2 py-1 rounded-full text-sm ${
-                      product.status === "Active"
-                        ? "bg-success-light text-success"
-                        : product.status === "Low Stock"
-                        ? "bg-warning-light text-warning"
-                        : "bg-error-light text-error"
-                    }`}
-                  >
-                    {product.status}
-                  </span>
-                </td>
-                <td className="p-2 border-b border-border">
-                  <button className="px-3 py-1 bg-primary text-white rounded-md text-sm hover:bg-primary/80">
-                    <EditIcon className="inline-block w-4 h-4 mr-1" />
-                  </button>
-                </td>
+
+        {/* ================= TABLE ================= */}
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead className="text-muted-foreground">
+              <tr className="border-b border-border">
+                <th className="px-6 py-4">
+                  <input type="checkbox" />
+                </th>
+                <th className="text-left px-6 py-4">Product Name & Size</th>
+                <th className="text-left px-6 py-4">Price</th>
+                <th className="text-left px-6 py-4">Stock</th>
+                <th className="text-left px-6 py-4">Category</th>
+                <th className="text-left px-6 py-4">Rating</th>
+                <th className="text-center px-6 py-4">Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+
+            <tbody>
+              {filteredProducts.map((product) => (
+                <tr
+                  key={product.id}
+                  className="border-b border-border hover:bg-muted/10"
+                >
+                  {/* Checkbox */}
+                  <td className="px-6 py-5">
+                    <input type="checkbox" />
+                  </td>
+
+                  {/* Product */}
+                  <td className="px-6 py-5">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center">
+                        {/* image placeholder */}
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">
+                          {product.name}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          Size: S, M, L
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+
+                  {/* Price */}
+                  <td className="px-6 py-5 font-medium">
+                    ${product.price.toFixed(2)}
+                  </td>
+
+                  {/* Stock */}
+                  <td className="px-6 py-5">
+                    <p className="font-medium">{product.stock} Item Left</p>
+                    <p className="text-xs text-muted-foreground">
+                      {product.sold ?? 0} Sold
+                    </p>
+                  </td>
+
+                  {/* Category */}
+                  <td className="px-6 py-5">{product.category}</td>
+
+                  {/* Rating */}
+                  <td className="px-6 py-5">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-1 rounded-md bg-muted text-xs font-medium">
+                        ★ {product.rating ?? "4.5"}
+                      </span>
+                      <span className="text-xs text-muted-foreground">
+                        {product.reviews ?? 55} Review
+                      </span>
+                    </div>
+                  </td>
+
+                  {/* Actions */}
+                  <td className="px-6 py-5">
+                    <div className="flex justify-center gap-2">
+                      <button className="p-2 rounded-md bg-muted hover:bg-muted/70">
+                        <Eye className="w-4 h-4" />
+                      </button>
+                      <button className="p-2 rounded-md bg-muted hover:bg-muted/70">
+                        <Pencil className="w-4 h-4" />
+                      </button>
+                      <button className="p-2 rounded-md bg-muted hover:bg-muted/70">
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {filteredProducts.length === 0 && (
+            <div className="py-16 text-center text-muted-foreground">
+              Products data will appear here
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

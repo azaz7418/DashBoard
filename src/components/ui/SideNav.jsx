@@ -16,6 +16,7 @@ import {
   CreditCard,
   Truck,
   FileText,
+  ChevronDown,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -62,12 +63,15 @@ const SideNav = ({ collapsed, theme }) => {
               active={pathname === "/orders"}
               collapsed={collapsed}
             />
-            <NavItem
+            <NavGroup
               icon={<Package size={18} />}
               label="Products"
-              href="/products"
-              active={pathname === "/products"}
+              subItems={[
+                { label: "List", href: "/products" },
+                { label: "Create", href: "/products/create" },
+              ]}
               collapsed={collapsed}
+              pathname={pathname}
             />
             <NavItem
               icon={<Users size={18} />}
@@ -155,9 +159,11 @@ const NavItem = ({ icon, label, badge, sublabel, active, danger, href, collapsed
         }
       `}
     >
-      <div className="transition-colors duration-300 group-hover:text-sidebar-text-hover group-hover:scale-110">
-        {icon}
-      </div>
+      {icon && (
+        <div className="transition-colors duration-300 group-hover:text-sidebar-text-hover group-hover:scale-110">
+          {icon}
+        </div>
+      )}
 
       {!collapsed && (
         <div className="flex flex-col">
@@ -179,6 +185,70 @@ const NavItem = ({ icon, label, badge, sublabel, active, danger, href, collapsed
   }
 
   return content;
+};
+
+/* --------------------------------
+    Nav Group Component
+  --------------------------------- */
+const NavGroup = ({ icon, label, subItems, collapsed, pathname }) => {
+  const [expanded, setExpanded] = useState(false);
+  const isActive = subItems.some((item) => pathname === item.href);
+
+  const handleClick = () => {
+    if (!collapsed) setExpanded(!expanded);
+  };
+
+  if (collapsed) {
+    return (
+      <Link href="/products" className="block">
+        <div
+          className={`flex items-center justify-center px-3 py-2 rounded-lg cursor-pointer transition-all duration-200 group ${
+            isActive
+              ? "bg-sidebar-item text-sidebar-activeItem"
+              : "text-sidebar-text hover:bg-sidebar-hover hover:text-sidebar-text-hover"
+          }`}
+        >
+          <div className="transition-colors duration-300 group-hover:text-sidebar-text-hover group-hover:scale-110">
+            {icon}
+          </div>
+        </div>
+      </Link>
+    );
+  }
+
+  return (
+    <div>
+      <div
+        className={`flex items-center gap-3 px-3 py-2 rounded-lg cursor-pointer transition-all duration-200 group ${
+          isActive
+            ? "bg-sidebar-item text-sidebar-activeItem"
+            : "text-sidebar-text hover:bg-sidebar-hover hover:text-sidebar-text-hover"
+        }`}
+        onClick={handleClick}
+      >
+        <div className="transition-colors duration-300 group-hover:text-sidebar-text-hover group-hover:scale-110">
+          {icon}
+        </div>
+        <div className="flex flex-col flex-1">
+          <span className="text-sm font-medium transition-colors duration-300">{label}</span>
+        </div>
+        <ChevronDown size={16} className={`transition-transform ${expanded ? "rotate-180" : ""}`} />
+      </div>
+      {expanded && (
+        <div className="ml-6 mt-1 space-y-1">
+          {subItems.map((item, index) => (
+            <NavItem
+              key={index}
+              label={item.label}
+              href={item.href}
+              active={pathname === item.href}
+              collapsed={false}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default SideNav;
