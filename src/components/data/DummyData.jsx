@@ -125,6 +125,9 @@ export const productsData = [
     stock: 120,
     status: "Active",
     createdAt: "2025-01-15",
+    rating: 4.5,
+    reviews: 55,
+    sold: 120,
   },
   {
     id: "PRD-002",
@@ -134,6 +137,9 @@ export const productsData = [
     stock: 3,
     status: "Low Stock",
     createdAt: "2025-02-10",
+    rating: 4.7,
+    reviews: 42,
+    sold: 85,
   },
   {
     id: "PRD-003",
@@ -143,6 +149,9 @@ export const productsData = [
     stock: 48,
     status: "Active",
     createdAt: "2025-03-22",
+    rating: 4.2,
+    reviews: 28,
+    sold: 65,
   },
   {
     id: "PRD-004",
@@ -152,6 +161,9 @@ export const productsData = [
     stock: 0,
     status: "Out of Stock",
     createdAt: "2025-04-18",
+    rating: 4.0,
+    reviews: 15,
+    sold: 30,
   },
 ];
 
