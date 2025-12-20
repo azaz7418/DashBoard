@@ -151,10 +151,10 @@ export const productsData = [
     sold: 85,
     // image: "httpsImage//via.placeholder.com/400x400?text=Smart+Watch",
     images: [
+      "/image/productImage/p-14.png",
       "/image/productImage/p-1.png",
       "/image/productImage/p-10.png",
       "/image/productImage/p-13.png",
-      "/image/productImage/p-14.png",
     ],
   },
   {
@@ -170,9 +170,9 @@ export const productsData = [
     offer: 20,
     sold: 65,
     images: [
+      "/image/productImage/p-13.png",
       "/image/productImage/p-1.png",
       "/image/productImage/p-10.png",
-      "/image/productImage/p-13.png",
       "/image/productImage/p-14.png",
     ],
   },
@@ -189,8 +189,8 @@ export const productsData = [
     offer: 20,
     sold: 30,
     images: [
-      "/image/productImage/p-1.png",
       "/image/productImage/p-10.png",
+      "/image/productImage/p-1.png",
       "/image/productImage/p-13.png",
       "/image/productImage/p-14.png",
     ],

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { productsData } from "@/components/data/DummyData";
 import { Eye, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ProductsPage() {
   const router = useRouter();
@@ -26,7 +27,9 @@ export default function ProductsPage() {
           <h2 className="text-lg font-semibold text-foreground">All Product List</h2>
 
           <div className="flex items-center gap-3">
-            <Link href="/products/create" className="px-4 py-2 bg-primary text-white rounded-md text-sm">Add Product</Link>
+            <Link href="/products/create" className="px-4 py-2 bg-primary text-white rounded-md text-sm">
+              Add Product
+            </Link>
             <select className="px-3 py-2 border border-border rounded-md bg-background text-sm">
               <option>This Month</option>
               <option>Last Month</option>
@@ -40,9 +43,9 @@ export default function ProductsPage() {
           <table className="w-full text-sm">
             <thead className="text-muted-foreground">
               <tr className="border-b border-border">
-                <th className="px-6 py-4">
+                {/* <th className="px-6 py-4">
                   <input type="checkbox" />
-                </th>
+                </th> */}
                 <th className="text-left px-6 py-4">Product Name & Size</th>
                 <th className="text-left px-6 py-4">Price</th>
                 <th className="text-left px-6 py-4">Stock</th>
@@ -56,15 +59,22 @@ export default function ProductsPage() {
               {filteredProducts.map((product) => (
                 <tr key={product.id} className="border-b border-border hover:bg-muted/10">
                   {/* Checkbox */}
-                  <td className="px-6 py-5">
+                  {/* <td className="px-6 py-5">
                     <input type="checkbox" />
-                  </td>
+                  </td> */}
 
                   {/* Product */}
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-lg bg-muted flex items-center justify-center">
                         {/* image placeholder */}
+                        <Image
+                          src={product?.images[0]}
+                          alt={product.name}
+                          width={48}
+                          height={48}
+                          className="rounded-lg"
+                        />
                       </div>
                       <div>
                         <p className="font-medium text-foreground">{product.name}</p>
@@ -97,18 +107,18 @@ export default function ProductsPage() {
 
                   {/* Actions */}
                   <td className="px-6 py-5">
-                    <div className="flex justify-center gap-2">
+                    <div className="flex justify-center gap-2 p-2">
                       <button
                         onClick={() => router.push(`/products/${product.id}`)}
-                        className="p-2 rounded-md bg-muted hover:bg-muted/70"
+                        className="p-2 rounded-md bg-success/10 hover:bg-success/20 cursor-pointer shadow-2xl shadow-success "
                       >
-                        <Eye className="w-4 h-4" />
+                        <Eye className="w-4 h-4 text-success" />
                       </button>
-                      <button className="p-2 rounded-md bg-muted hover:bg-muted/70">
-                        <Pencil className="w-4 h-4" />
+                      <button className="p-2 rounded-md bg-info/10 hover:bg-info/20 cursor-pointer shadow-2xl shadow-info">
+                        <Pencil className="w-4 h-4 text-info" />
                       </button>
-                      <button className="p-2 rounded-md bg-muted hover:bg-muted/70">
-                        <Trash2 className="w-4 h-4" />
+                      <button className="p-2 rounded-md bg-error/10 hover:bg-error/20 cursor-pointer">
+                        <Trash2 className="w-4 h-4 text-error" />
                       </button>
                     </div>
                   </td>

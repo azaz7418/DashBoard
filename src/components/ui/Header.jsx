@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Menu, Search, Moon, Sun, Bell, LayoutGrid } from "lucide-react";
+import { Menu, Search, Moon, Sun, Bell, LayoutGrid, PanelLeftClose } from "lucide-react";
 import Image from "next/image";
 
 const Header = ({ onToggle, onThemeToggle, theme }) => {
@@ -22,7 +22,7 @@ const Header = ({ onToggle, onThemeToggle, theme }) => {
           onClick={onToggle}
           className="text-sidebar-text hover:text-sidebar-text-hover dark:text-sidebar-text dark:hover:text-sidebar-text-hover transition-colors cursor-pointer"
         >
-          <Menu size={20} />
+          <PanelLeftClose size={20} />
         </button>
 
         {/* Search */}
@@ -54,7 +54,7 @@ const Header = ({ onToggle, onThemeToggle, theme }) => {
 
         {/* Language */}
         {/* <div className="flex items-center gap-1 cursor-pointer"> */}
-          {/* <Image
+        {/* <Image
             src="https://www.freepik.com/free-photos-vectors/person"
             alt="EN"
             width={20}

@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Home,
   ShoppingCart,
   Package,
   Users,
@@ -17,6 +16,7 @@ import {
   Truck,
   FileText,
   ChevronDown,
+  LayoutDashboard,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -50,7 +50,7 @@ const SideNav = ({ collapsed, theme }) => {
         <section className="mb-6 pt-4">
           <nav className="space-y-1">
             <NavItem
-              icon={<Home size={18} />}
+              icon={<LayoutDashboard size={18} />}
               label="Dashboard"
               href="/"
               active={pathname === "/"}

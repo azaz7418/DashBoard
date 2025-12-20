@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { productsData } from "@/components/data/DummyData";
@@ -32,7 +32,6 @@ const features = [
     icon: "Headphones",
   },
 ];
-<Scooter />
 const iconMap = {
   Scooter: Scooter,
   Ticket: Ticket,
@@ -46,8 +45,20 @@ export default function ProductDetailPage() {
   const product = productsData.find((p) => p.id === id);
 
   const [qty, setQty] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(product.images?.[0] || product.image);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  const selectedImage = product.images?.[currentImageIndex] || product.image;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % product.images.length);
+    }, 5000); // Change image every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [product.images.length]);
+
+
+  
   if (!product) {
     return (
       <div className="p-8 text-center">
@@ -60,7 +71,7 @@ export default function ProductDetailPage() {
   }
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="p-8 space-y-6">
       {/* Back */}
       <button
         onClick={() => router.push("/products")}
@@ -71,18 +82,19 @@ export default function ProductDetailPage() {
       </button>
 
       {/* ================= TOP SECTION ================= */}
-      <div className="grid grid-cols-1 xl:grid-cols-[420px_1fr] gap-8 ">
+      <div className="grid grid-cols-1 xl:grid-cols-[420px_1fr] gap-6 ">
         {/* Image Gallery */}
         <div className="space-y-4 bg-white/50 dark:bg-black/20 border border-border rounded-xl p-6">
           <Image
+            key={currentImageIndex}
             src={selectedImage}
             alt={product.name}
             width={400}
             height={420}
-            className="rounded-xl object-cover w-full h-[420px]"
+            className="rounded-xl object-cover w-full transition-opacity duration-500"
           />
 
-          <div className="flex gap-3 ">
+          <div className="flex gap-3 justify-center">
             {product?.images?.map((img, i) => (
               <Image
                 key={i}
@@ -91,9 +103,9 @@ export default function ProductDetailPage() {
                 width={80}
                 height={80}
                 className={`h-20 w-20 rounded-lg border object-cover cursor-pointer ${
-                  selectedImage === img ? "border-primary" : "border-border"
+                  currentImageIndex === i ? "border-primary" : "border-border"
                 }`}
-                onClick={() => setSelectedImage(img)}
+                onClick={() => setCurrentImageIndex(i)}
               />
             ))}
           </div>
@@ -108,9 +120,7 @@ export default function ProductDetailPage() {
         {/* Product Info */}
         <div className="space-y-5 bg-white/50 dark:bg-black/20 border border-border rounded-xl p-6">
           <span className="inline-block px-3 py-1 text-xs rounded-md bg-success-light text-success">New Arrival</span>
-
           <h1 className="text-2xl font-semibold text-foreground">{product.name}</h1>
-
           {/* Rating */}
           <div className="flex items-center gap-2">
             <div className="flex">
@@ -122,7 +132,6 @@ export default function ProductDetailPage() {
               {product.rating} ({product.reviews} Reviews)
             </span>
           </div>
-
           {/* Price */}
           {product.offer ? (
             <div className="space-y-1">
