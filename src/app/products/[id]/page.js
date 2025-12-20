@@ -52,13 +52,11 @@ export default function ProductDetailPage() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % product.images.length);
-    }, 5000); 
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [product.images.length]);
 
-
-  
   if (!product) {
     return (
       <div className="p-8 text-center">
@@ -188,9 +186,15 @@ export default function ProductDetailPage() {
 
           {/* Stock Info */}
           <ul className="text-sm text-muted-foreground space-y-1">
-            <li>✔ In Stock</li>
-            <li>✔ Free delivery available</li>
-            <li>✔ Sales 10% Off (Use Code: CODE123)</li>
+            <li>
+              <span className="text-success">✔</span> In Stock
+            </li>
+            <li>
+              <span className="text-success">✔</span> Free delivery available
+            </li>
+            <li>
+              <span className="text-success">✔</span> Sales 10% Off (Use Code: CODE123)
+            </li>
           </ul>
         </div>
       </div>
