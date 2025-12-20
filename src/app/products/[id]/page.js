@@ -52,7 +52,7 @@ export default function ProductDetailPage() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % product.images.length);
-    }, 5000); // Change image every 3 seconds
+    }, 5000); 
 
     return () => clearInterval(interval);
   }, [product.images.length]);
