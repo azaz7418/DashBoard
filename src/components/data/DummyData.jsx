@@ -332,3 +332,30 @@ export const settingsData = {
     avatar: "/avatars/admin-default.png",
   },
 };
+
+export const features = [
+  {
+    id: 1,
+    title: "Free shipping for all orders over $200",
+    description: "Only in this week",
+    icon: "Scooter", // or 'TruckIcon' depending on your library
+  },
+  {
+    id: 2,
+    title: "Special discounts for customers",
+    description: "Coupons up to $ 100",
+    icon: "Ticket",
+  },
+  {
+    id: 3,
+    title: "Free gift wrapping",
+    description: "With 100 letters custom note",
+    icon: "Gift",
+  },
+  {
+    id: 4,
+    title: "Expert Customer Service",
+    description: "8:00 - 20:00, 7 days/wee",
+    icon: "Headphones",
+  },
+];
