@@ -52,17 +52,6 @@ const Header = ({ onToggle, onThemeToggle, theme }) => {
           {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
         </button>
 
-        {/* Language */}
-        {/* <div className="flex items-center gap-1 cursor-pointer"> */}
-        {/* <Image
-            src="https://www.freepik.com/free-photos-vectors/person"
-            alt="EN"
-            width={20}
-            height={14}
-            className="rounded-sm"
-          /> */}
-        {/* </div> */}
-
         {/* Notifications */}
         <button className="relative text-sidebar-text hover:text-sidebar-text-hover dark:text-sidebar-text dark:hover:text-sidebar-text-hover transition-colors">
           <Bell size={18} />

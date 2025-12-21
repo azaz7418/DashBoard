@@ -58,11 +58,6 @@ export default function ProductsPage() {
             <tbody>
               {filteredProducts.map((product) => (
                 <tr key={product.id} className="border-b border-border hover:bg-muted/10">
-                  {/* Checkbox */}
-                  {/* <td className="px-6 py-5">
-                    <input type="checkbox" />
-                  </td> */}
-
                   {/* Product */}
                   <td className="px-6 py-5">
                     <div className="flex items-center gap-4">
