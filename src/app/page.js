@@ -59,8 +59,6 @@ export default function Home() {
                   </div>
                   <span className="text-sm font-semibold tracking-tight text-muted-foreground">{kpi.label}</span>
                 </div>
-
-                {/* Value & Trend */}
                 <div className="flex items-baseline justify-between">
                   <h3 className="text-3xl font-bold tracking-tight text-foreground">{kpi.value}</h3>
                   {/* Optional: Add a trend indicator if your data supports it */}
@@ -87,9 +85,9 @@ export default function Home() {
             </LineChart>
           </ResponsiveContainer>
         </div>
-
-        {/* Orders Status */}
       </div>
+
+      {/* Orders Status */}
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
