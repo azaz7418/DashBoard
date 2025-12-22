@@ -14,6 +14,7 @@ import {
   Cell,
   XAxis,
 } from "recharts";
+import { DollarSign, ShoppingCart, Users, Target } from "lucide-react";
 
 export default function Home() {
   const { kpis, recentOrders, lowStockAlerts } = dashboardOverview;
@@ -22,10 +23,10 @@ export default function Home() {
   const topSellingProducts = [...productsData].sort((a, b) => b.price - a.price).slice(0, 5);
 
   const kpiData = [
-    { label: "Total Revenue", value: `$${kpis.totalRevenue.toLocaleString()}` },
-    { label: "Total Orders", value: kpis.totalOrders.toLocaleString() },
-    { label: "Total Customers", value: kpis.totalCustomers.toLocaleString() },
-    { label: "Conversion Rate", value: `${kpis.conversionRate}%` },
+    { label: "Total Revenue", value: `$${kpis.totalRevenue.toLocaleString()}`, icon: DollarSign },
+    { label: "Total Orders", value: kpis.totalOrders.toLocaleString(), icon: ShoppingCart },
+    { label: "Total Customers", value: kpis.totalCustomers.toLocaleString(), icon: Users },
+    { label: "Conversion Rate", value: `${kpis.conversionRate}%`, icon: Target },
   ];
 
   const pieColors = ["var(--primary-500)", "var(--success-500)", "var(--warning-500)", "var(--error-500)"];
@@ -41,11 +42,35 @@ export default function Home() {
       {/* Charts Section */}
       <div className="grid grid-cols-1 xl:grid-cols-5 gap-6">
         {/* KPI Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 col-span-2 h-fit gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 col-span-2 h-fit  gap-3">
           {kpiData.map((kpi, index) => (
-            <div key={index} className="rounded-2xl border border-border bg-background p-5 shadow-sm">
-              <p className="text-xs text-muted font-medium">{kpi.label}</p>
-              <p className="mt-2 text-2xl font-bold text-primary">{kpi.value}</p>
+            <div
+              key={index}
+              className="group relative overflow-hidden rounded-3xl border border-border bg-card p-4 transition-all duration-300 hover:shadow-lg "
+            >
+              {/* Background Decorative Icon */}
+              <kpi.icon className="absolute -bottom-4 -right-4 h-24 w-24 text-primary/5 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-12" />
+
+              <div className="relative z-10 flex flex-col gap-4">
+                {/* Header: Icon + Label */}
+                <div className="flex items-center gap-3">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <kpi.icon className="h-4 w-4" />
+                  </div>
+                  <span className="text-sm font-semibold tracking-tight text-muted-foreground">{kpi.label}</span>
+                </div>
+
+                {/* Value & Trend */}
+                <div className="flex items-baseline justify-between">
+                  <h3 className="text-3xl font-bold tracking-tight text-foreground">{kpi.value}</h3>
+                  {/* Optional: Add a trend indicator if your data supports it */}
+                  {/* {kpi.trend && (
+                    <span className={`text-xs font-medium ${kpi.trend > 0 ? "text-emerald-500" : "text-rose-500"}`}>
+                      {kpi.trend > 0 ? "↑" : "↓"} {Math.abs(kpi.trend)}%
+                    </span>
+                  )} */}
+                </div>
+              </div>
             </div>
           ))}
         </div>
