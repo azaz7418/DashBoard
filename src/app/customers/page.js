@@ -1,12 +1,19 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { customersData, ordersData } from "../../components/data/DummyData";
 
 export default function CustomersPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCurrentPage(1);
+  }, [statusFilter]);
 
   const filteredCustomers = useMemo(() => {
     return customersData.filter((customer) => {
@@ -27,6 +34,11 @@ export default function CustomersPage() {
     // Simple trend: if more than 5 orders, "High", else "Low"
     return orders.length > 5 ? "High" : "Low";
   };
+
+  const paginatedCustomers = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredCustomers.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredCustomers, currentPage, itemsPerPage]);
 
   return (
     <div className="p-8">
@@ -69,7 +81,7 @@ export default function CustomersPage() {
               </tr>
             </thead>
             <tbody>
-              {filteredCustomers.map((customer) => (
+              {paginatedCustomers.map((customer) => (
                 <tr key={customer.id} className="hover:bg-muted/20">
                   <td className="border border-border px-4 py-2">{customer.name}</td>
                   <td className="border border-border px-4 py-2">{customer.email}</td>
@@ -97,6 +109,37 @@ export default function CustomersPage() {
               ))}
             </tbody>
           </table>
+
+          {/* Pagination */}
+          <div className="flex justify-center items-center gap-2 mt-4 pb-4">
+            <button
+              onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+              disabled={currentPage === 1}
+              className="px-3 py-2 bg-primary text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Prev
+            </button>
+            {Array.from({ length: Math.ceil(filteredCustomers.length / itemsPerPage) }, (_, i) => i + 1).map((page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`px-3 py-2 rounded-md ${
+                  page === currentPage ? "bg-primary text-white" : "bg-muted text-foreground"
+                }`}
+              >
+                {page}
+              </button>
+            ))}
+            <button
+              onClick={() =>
+                setCurrentPage(Math.min(Math.ceil(filteredCustomers.length / itemsPerPage), currentPage + 1))
+              }
+              disabled={currentPage === Math.ceil(filteredCustomers.length / itemsPerPage)}
+              className="px-3 py-2 bg-primary text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
 
