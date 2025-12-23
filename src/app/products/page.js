@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { productsData } from "@/components/data/DummyData";
 import { Eye, Pencil, Trash2 } from "lucide-react";
@@ -10,6 +10,13 @@ import Image from "next/image";
 export default function ProductsPage() {
   const router = useRouter();
   const [categoryFilter, setCategoryFilter] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setCurrentPage(1);
+  }, [categoryFilter]);
 
   const filteredProducts = useMemo(() => {
     return productsData.filter((p) => {
@@ -17,6 +24,11 @@ export default function ProductsPage() {
       return true;
     });
   }, [categoryFilter]);
+
+  const paginatedProducts = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+  }, [filteredProducts, currentPage, itemsPerPage]);
 
   return (
     <div className="p-8">
@@ -56,7 +68,7 @@ export default function ProductsPage() {
             </thead>
 
             <tbody>
-              {filteredProducts.map((product) => (
+              {paginatedProducts.map((product) => (
                 <tr key={product.id} className="border-b border-border hover:bg-muted/10">
                   {/* Product */}
                   <td className="px-6 py-5">
@@ -122,9 +134,38 @@ export default function ProductsPage() {
             </tbody>
           </table>
 
-          {filteredProducts.length === 0 && (
+          {paginatedProducts.length === 0 && (
             <div className="py-16 text-center text-muted-foreground">Products data will appear here</div>
           )}
+        </div>
+
+        {/* Pagination */}
+        <div className="flex justify-center items-center gap-2 mt-4 pb-4">
+          <button
+            onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+            disabled={currentPage === 1}
+            className="px-3 py-2 bg-primary text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Prev
+          </button>
+          {Array.from({ length: Math.ceil(filteredProducts.length / itemsPerPage) }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={`px-3 py-2 rounded-md ${
+                page === currentPage ? "bg-primary text-white" : "bg-muted text-foreground"
+              }`}
+            >
+              {page}
+            </button>
+          ))}
+          <button
+            onClick={() => setCurrentPage(Math.min(Math.ceil(filteredProducts.length / itemsPerPage), currentPage + 1))}
+            disabled={currentPage === Math.ceil(filteredProducts.length / itemsPerPage)}
+            className="px-3 py-2 bg-primary text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
