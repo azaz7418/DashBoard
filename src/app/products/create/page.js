@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Upload } from "lucide-react";
 
 export default function CreateProductPage() {
   const router = useRouter();
@@ -97,7 +98,11 @@ export default function CreateProductPage() {
           <div className="p-6 border-b border-border">
             <p className="text-sm font-medium text-foreground mb-3">Add Product Photo</p>
             <div className="h-40 border border-dashed border-border rounded-lg flex items-center justify-center text-sm text-muted-foreground">
-              Drop your images here, or click to browse
+              <input type="file" name="image" onChange={handleChange} className="hidden" id="image-upload" />
+              <label htmlFor="image-upload" className="cursor-pointer">
+                <Upload className="w-6 h-6 mx-auto mb-2" />
+                <p>Upload Image</p>
+              </label>
             </div>
           </div>
 
