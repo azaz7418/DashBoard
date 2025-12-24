@@ -55,9 +55,7 @@ export default function ProductsPage() {
           <table className="w-full text-sm">
             <thead className="text-muted-foreground">
               <tr className="border-b border-border">
-                {/* <th className="px-6 py-4">
-                  <input type="checkbox" />
-                </th> */}
+                
                 <th className="text-left px-6 py-4">Product Name & Size</th>
                 <th className="text-left px-6 py-4">Price</th>
                 <th className="text-left px-6 py-4">Stock</th>
