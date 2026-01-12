@@ -58,7 +58,7 @@ module.exports = {
           text: "var(--sidebar-text)",
           activeItem: "var(--sidebar-text-active)",
           border: "var(--sidebar-border)",
-          item: "var(--sidebar-active-item-bg)",
+          item: "var(--sidebar-hover-bg)",
           hover: "var(--sidebar-hover-bg)",
         },
       },

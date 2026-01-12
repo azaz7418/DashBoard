@@ -33,8 +33,8 @@ const Header = ({ onToggle, onThemeToggle, theme }) => {
             placeholder="Search"
             className="
               w-64 pl-10 pr-4 py-2 rounded-lg
-              bg-sidebar-item dark:bg-[#0f1733]
-              text-sm text-sidebar-text-hover dark:text-white placeholder:text-sidebar-text
+              bg-[#43434733] 
+              text-sm text-black dark:text-white placeholder:text-sidebar-text
               border border-sidebar-border
               focus:outline-none focus:ring-2 focus:ring-primary/40
             "
